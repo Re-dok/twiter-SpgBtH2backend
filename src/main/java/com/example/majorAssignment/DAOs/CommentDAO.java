@@ -23,6 +23,11 @@ public int addComment(UUID commentId, Comments comment){
 public Optional<Comments> getCommentById(UUID commentId){
     return CommentsDB.stream().filter(comment -> comment.getCommentId().equals(commentId)).findFirst();//find the first match or return null if not found
 }
+public Optional<List<Comments>> getAllComments(){
+    if(CommentsDB.isEmpty())
+        return Optional.of(null);
+    return Optional.of(CommentsDB);
+}
 public int deleteCommentById(UUID commentId){
     Optional<Comments> comment=getCommentById(commentId);
     if(comment.isEmpty())

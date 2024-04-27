@@ -1,10 +1,13 @@
 package com.example.majorAssignment.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
-
+@Entity
 public class User {
+    @Id
     private final UUID id;
     private String name;
     private String email;

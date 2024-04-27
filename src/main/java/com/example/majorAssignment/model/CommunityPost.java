@@ -1,12 +1,15 @@
 package com.example.majorAssignment.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
+@Entity
 public class CommunityPost {
+    @Id
     private final UUID postId;
     private String postBody;
     private LocalDate dateOfPost;
