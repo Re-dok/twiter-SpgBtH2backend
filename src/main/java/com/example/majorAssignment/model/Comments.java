@@ -33,7 +33,7 @@ public class Comments {
 
     public Comments(@JsonProperty("commentId")UUID commentId,
                     @JsonProperty("postId") UUID postId,
-                    @JsonProperty("commentCreater")UUID commentCreaterId,
+                    @JsonProperty("commentCreaterId")UUID commentCreaterId,
                     @JsonProperty("commentContent")String commentContent) {
         this.commentId = commentId;
         this.postId = postId;
