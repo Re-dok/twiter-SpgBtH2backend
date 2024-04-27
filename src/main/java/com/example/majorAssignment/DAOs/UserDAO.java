@@ -27,7 +27,7 @@ public class UserDAO implements UserDA0{
     }
         public Optional<List<User>> getAllUsers(){
             if(UserDB.isEmpty())
-                return Optional.of(null);
+                return Optional.of(Collections.emptyList());
             return Optional.of(UserDB);
         }
 }

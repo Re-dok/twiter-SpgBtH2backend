@@ -3,10 +3,7 @@ package com.example.majorAssignment.DAOs;
 import com.example.majorAssignment.model.Comments;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public class CommentDAO implements CommetsDAO{
@@ -25,7 +22,7 @@ public Optional<Comments> getCommentById(UUID commentId){
 }
 public Optional<List<Comments>> getAllComments(){
     if(CommentsDB.isEmpty())
-        return Optional.of(null);
+        return Optional.of(Collections.emptyList());
     return Optional.of(CommentsDB);
 }
 public int deleteCommentById(UUID commentId){
