@@ -11,6 +11,11 @@ public class Comments {
     @Id
     private final  UUID commentId;
     private final UUID postId;
+
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
+    }
+
     private final UUID commentCreaterId;
     private String commentContent;
 

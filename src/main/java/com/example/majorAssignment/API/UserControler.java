@@ -22,7 +22,7 @@ public class UserControler {
     public UserControler(UserService userService) {
         this.userService = userService;
     }
-    @GetMapping
+    @GetMapping(path = "getAllUsers")
     public List<User> getAllUsers() {
         Optional<List<User>> optionalUsers = userService.getAllUsers();
         if (optionalUsers.isPresent()) {

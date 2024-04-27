@@ -10,11 +10,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+//TODO add delete comment
 
 @RequestMapping("/comment")
 @RestController
 public class CommentsController {
     private final CommentsService commentsService;
+//TODO remove the hello call here
     @GetMapping("/hello")
     public String helloWorld() {
         return "Hello, World!";
@@ -23,10 +25,27 @@ public class CommentsController {
 public CommentsController(CommentsService commentsService) {
             this.commentsService=commentsService;
     }
+   //TODO add the conditions for no bad creds
     @PostMapping
     public Comments addComment(@RequestBody Comments comment){
         commentsService.addCommet(comment);
         return comment;
+    }
+    //TODO should the input type be int only???
+    @DeleteMapping
+    public String deleteCommentById(@RequestBody Comments comment){
+        int delStatus=commentsService.deleteCommentById(comment.getCommentId());
+            if(delStatus==1)
+                    return "Comment does not exist";
+            return "Comment deleted";
+    }
+    //TODO add a patch req for changing a comment
+    @PatchMapping
+    public String UpdateCommentById(@RequestBody Comments comments){
+        int updateStatus=commentsService.updateCommentById(comments.getCommentId(),comments.getCommentContent());
+        if(updateStatus==1)
+                return "Comment does not exist";
+        return "Comment edited successfully";
     }
     @GetMapping
     public Optional<List<Comments>> getAllComments() {

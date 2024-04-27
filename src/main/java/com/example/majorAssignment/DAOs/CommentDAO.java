@@ -17,6 +17,8 @@ public int addComment(UUID commentId, Comments comment){
             ));
     return 0;
 }
+//TODO
+    //in addcomment first check for postId then, creater id(idk about this)
 public Optional<Comments> getCommentById(UUID commentId){
     return CommentsDB.stream().filter(comment -> comment.getCommentId().equals(commentId)).findFirst();//find the first match or return null if not found
 }
@@ -35,7 +37,7 @@ public int deleteCommentById(UUID commentId){
 public int updateCommentById(UUID commentId,Comments changedComment){
     return getCommentById(commentId).map(c->{
             int commentIndex=CommentsDB.indexOf(c);//find the index of the comment
-            if(commentIndex>1){
+            if(commentIndex>-1){
                     CommentsDB.set(commentIndex,changedComment);//update at that index the changes
                     return 0;//update successfull
             }
