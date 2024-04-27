@@ -29,7 +29,10 @@ public CommentsController(CommentsService commentsService) {
     }
     @GetMapping
     public Optional<List<Comments>> getAllComments(){
-        return commentsService.getAllComments();
+        if(commentsService.getAllComments().isEmpty())
+            return Optional.of(null);
+        return Optional.of(commentsService.getAllComments().get());
+//        return commentsService.getAllComments();
     }
     @GetMapping(path = "{commentId}")
     public Optional<Comments>getCommentById(@PathVariable("commentId")UUID commentId){
