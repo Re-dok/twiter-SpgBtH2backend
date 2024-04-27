@@ -3,20 +3,23 @@ package com.example.majorAssignment.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 @Entity
 public class Comments {
     @Id
-    private final  UUID commentId;
-    private final UUID postId;
-
+    private  UUID commentId;
+    public void setCommentId(UUID commentId) {this.commentId=commentId;}
+    private UUID postId;
+    public Comments() {
+        this.commentId = UUID.randomUUID(); // Generate a random UUID
+        // You may also initialize other fields here if needed
+    }
     public void setCommentContent(String commentContent) {
         this.commentContent = commentContent;
     }
 
-    private final UUID commentCreaterId;
+    private  UUID commentCreaterId;
     private String commentContent;
 
     public UUID getCommentId() {
