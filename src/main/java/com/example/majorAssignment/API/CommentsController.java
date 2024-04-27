@@ -3,6 +3,7 @@ package com.example.majorAssignment.API;
 import com.example.majorAssignment.Services.CommentsService;
 import com.example.majorAssignment.model.Comments;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-//TODO add delete comment
+
 
 @RequestMapping("/comment")
 @RestController
@@ -39,7 +40,7 @@ public CommentsController(CommentsService commentsService) {
                     return "Comment does not exist";
             return "Comment deleted";
     }
-    //TODO add a patch req for changing a comment
+
     @PatchMapping
     public String UpdateCommentById(@RequestBody Comments comments){
         int updateStatus=commentsService.updateCommentById(comments.getCommentId(),comments.getCommentContent());
@@ -61,7 +62,10 @@ public CommentsController(CommentsService commentsService) {
         }
     }
     @GetMapping(path = "{commentId}")
-    public Optional<Comments>getCommentById(@PathVariable("commentId")UUID commentId){
-        return commentsService.getCommentById(commentId);
+    public ResponseEntity<?> getCommentById(@PathVariable("commentId")UUID commentId){
+       Optional<Comments>commentStaus=commentsService.getCommentById(commentId);
+       if(commentStaus.isEmpty())
+           return ResponseEntity.ok("Comment does not exist");
+        return ResponseEntity.ok(commentStaus.get());
     }
 }

@@ -4,7 +4,7 @@ import com.example.majorAssignment.model.Comments;
 
 import java.util.UUID;
 
-public interface CommetsDAO {
+public interface CommetsDA0{
     int addComment(UUID commentId, Comments comment);
 
     default public int addComment(Comments comment){

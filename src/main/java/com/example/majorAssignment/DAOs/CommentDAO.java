@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class CommentDAO implements CommetsDAO{
+public class CommentDAO implements CommetsDA0{
 private static List<Comments> CommentsDB =new ArrayList<>();
 @Override
-public int addComment(UUID commentId, Comments comment){
+public int addComment(UUID commentId,Comments comment){
     CommentsDB.add(new Comments(commentId,
                                 comment.getPostId(),
                                 comment.getCommentCreaterId(),
@@ -44,6 +44,5 @@ public int updateCommentById(UUID commentId,Comments changedComment){
             return 1;//no such comment found
     }).orElse(1);
 }
-
 
 }

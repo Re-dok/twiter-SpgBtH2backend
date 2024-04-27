@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class UserDAO implements UserDA0{
+public class UserDAO implements UserDA0 {
     private static List<User> UserDB=new ArrayList<>();
     public int addUser(UUID userId,String email,String name,String password){
         if(getUserByEmail(email).isPresent())
