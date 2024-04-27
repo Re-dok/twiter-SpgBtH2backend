@@ -44,14 +44,17 @@ public class UserControler {
         }
         int loginSatuts=userService.login(loginRequest.getEmail(),loginRequest.getPassword());
         if(loginSatuts==1)
-            return "No such User";
+            return "User does not exist";
         else if(loginSatuts==2)
-            return "Wrong Password";
-        return "Login Successful!";
+            return "Username/Password Incorrect";
+        return "Login Successful";
     }
     @PostMapping("signup")
-    public int signup(@RequestBody User user){
-        return userService.signup(user);
+    public String signup(@RequestBody User user){
+        int signupStatus=userService.signup(user);
+        if(signupStatus==1)
+            return "Forbidden, Account already exists";
+        return "Account Creation Successful";
     }
     @GetMapping(path="{userId}")
     public int getUserById(@PathVariable("userId")final UUID userId){
