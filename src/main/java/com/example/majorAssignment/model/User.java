@@ -1,36 +1,47 @@
 package com.example.majorAssignment.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import org.springframework.stereotype.Component;
+import jakarta.persistence.Table;
 
+import javax.validation.constraints.Email;
 import java.util.UUID;
+
 @Entity
+@Table(name = "user_table")
 public class User {
+
     @Id
-    private final UUID id;
+    private UUID id;
+
+//    @NotBlank(message = "Name is required")
     private String name;
-    @Id
+
+
+    @Email(message = "Invalid email address")
     private String email;
-    private final String password;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public User(@JsonProperty("userId")UUID id,
-                @JsonProperty("email")String email,
-                @JsonProperty("name")String name,
-                @JsonProperty("password")String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password=password;
-    }
+//    @NotBlank(message = "Password is required")
+    private String password;
 
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -40,4 +51,20 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public User() {
+        this.id = UUID.randomUUID();
+    }
+
+    public User(UUID id, String email, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
 }
