@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -30,7 +31,9 @@ public class PostDAO implements PostDA0 {
 
         return 0; // Post added successfully
     }
-
+    public Optional<Post> getPostById(UUID id){
+        return postRepository.findById(id);
+    }
     private boolean checkCreator(UUID creatorId) {
         return userDAO.getUserById(creatorId).isPresent();
     }

@@ -5,7 +5,9 @@ import com.example.majorAssignment.model.Comments;
 import java.util.UUID;
 
 public interface CommetsDA0 {
-    int addComment(UUID commentId, Comments comment);
+    default int addComment(UUID commentId, Comments comment){
+        return 1;
+    }
 
     default public int addComment(Comments comment){
         UUID commentId=UUID.randomUUID();

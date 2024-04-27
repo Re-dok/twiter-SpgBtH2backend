@@ -3,11 +3,13 @@ package com.example.majorAssignment.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import org.springframework.lang.NonNull;
 
 import java.util.UUID;
 @Entity
 public class Comments {
     @Id
+    @NonNull
     private  UUID commentId;
     public void setCommentId(UUID commentId) {this.commentId=commentId;}
     private UUID postId;

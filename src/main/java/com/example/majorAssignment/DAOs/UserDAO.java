@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public class UserDAO implements UserDA0 {
 
-    private final UserRepo userRepository;
+    public final UserRepo userRepository;
 
     @Autowired
     public UserDAO(UserRepo userRepository) {

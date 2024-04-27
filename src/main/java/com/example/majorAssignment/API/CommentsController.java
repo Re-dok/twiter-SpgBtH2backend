@@ -4,7 +4,6 @@ import com.example.majorAssignment.Services.CommentsService;
 import com.example.majorAssignment.model.Comments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -28,9 +27,13 @@ public CommentsController(CommentsService commentsService) {
     }
    //TODO add the conditions for no bad creds
     @PostMapping
-    public Comments addComment(@RequestBody Comments comment){
-        commentsService.addCommet(comment);
-        return comment;
+    public String addComment(@RequestBody Comments comment){
+        int commAddStatus=commentsService.addCommet(comment);
+        if(commAddStatus==1)
+            return "User id wrong";
+        else if(commAddStatus==2)
+            return "Post not available";
+        return "Commented";
     }
     //TODO should the input type be int only???
     @DeleteMapping

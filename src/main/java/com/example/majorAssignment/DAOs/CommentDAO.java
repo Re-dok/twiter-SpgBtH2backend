@@ -2,22 +2,41 @@ package com.example.majorAssignment.DAOs;
 
 import com.example.majorAssignment.model.Comments;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class CommentDAO implements CommetsDA0 {
     private final CommentsRepo commentsRepository;
-
+    private final UserDAO userDAO;
+private final PostDAO postDAO;
     @Autowired
-    public CommentDAO(CommentsRepo commentsRepository) {
+    public CommentDAO(CommentsRepo commentsRepository,UserDAO userDAO,PostDAO postDAO) {
         this.commentsRepository = commentsRepository;
+        this.userDAO = userDAO;
+        this.postDAO=postDAO;
+    }
+    private boolean checkCreator(UUID creatorId) {
+        return userDAO.getUserById(creatorId).isPresent();
     }
 
+    private boolean checkPost(UUID postId) {
+        return postDAO.getPostById(postId).isPresent();
+    }
     // Add a new comment
-    public int addComment(UUID commentId, Comments comment) {
-        comment.setCommentId(commentId); // Set the commentId
+    @Override
+    public int addComment(@NonNull Comments comment) {
+        comment.setCommentId(UUID.randomUUID());
+        if(!checkCreator(comment.getCommentCreaterId()))//check if comment createrId is correct
+            return 1;
+        else if(!checkPost(comment.getPostId()))
+            return 2;//check if post exits
+        comment.setCommentId(comment.getCommentId()); // Set the commentId
         commentsRepository.save(comment); // Save the comment to the repository
         return 0;
     }
