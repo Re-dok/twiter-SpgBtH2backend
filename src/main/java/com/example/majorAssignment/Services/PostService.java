@@ -38,6 +38,9 @@ public class PostService {
         // Then delete the post
         return postDAO.deletePostById(postId) == 0;
     }
+    public int updatePost(UUID id,String changedPostContent){
+        return postDAO.updatePost(id,changedPostContent);
+    }
     public Optional<PostResp> getPostById(UUID postId){
         Optional<Post> p=postDAO.getPostById(postId);
         if(p.isEmpty())

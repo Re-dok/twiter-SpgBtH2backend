@@ -31,6 +31,16 @@ public class PostDAO implements PostDA0 {
 
         return 0; // Post added successfully
     }
+    public int updatePost(UUID postId,String changedPostContent){
+        Optional<Post> currentPost = getPostById(postId);
+        if (currentPost.isEmpty())
+            return 1; // Post does not exist
+        // Update the post content
+        currentPost.get().setPostContent(changedPostContent);
+        // Save the updated post to the database
+        int result = postRepository.updatePostById(postId, changedPostContent);
+        return 0;
+    }
     public Optional<Post> getPostById(UUID id){
         return postRepository.findById(id);
     }

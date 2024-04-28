@@ -35,6 +35,12 @@ public class PostController {
             return ResponseEntity.ok("Post does not exist");
         return ResponseEntity.ok(resp.get());
     }
+    @PatchMapping
+    public ResponseEntity<String> updatePost(@RequestBody Post changedPost){
+        if(postService.updatePost(changedPost.getPostId(),changedPost.getPostContent())==0)
+            return ResponseEntity.ok("Post edited successfully");
+        return ResponseEntity.ok("Post does not exist");
+    }
     @GetMapping
     public List<Post> getAllPosts(){
         return postService.getAllPosts();
