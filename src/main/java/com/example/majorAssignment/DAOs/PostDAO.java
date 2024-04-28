@@ -37,7 +37,14 @@ public class PostDAO implements PostDA0 {
     private boolean checkCreator(UUID creatorId) {
         return userDAO.getUserById(creatorId).isPresent();
     }
-
+    public int deletePostById(UUID postId) {
+        if (postRepository.existsById(postId)) {
+            postRepository.deleteById(postId);
+            return 0; // Successfully deleted
+        } else {
+            return 1; // Post not found
+        }
+    }
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }

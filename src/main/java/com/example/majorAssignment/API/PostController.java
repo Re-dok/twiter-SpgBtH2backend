@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/post")
 @RestController
@@ -27,5 +28,12 @@ public class PostController {
     @GetMapping
     public List<Post> getAllPosts(){
         return postService.getAllPosts();
+    }
+    @DeleteMapping(path = "{postId}")
+    public String deletePost(@PathVariable("postId") UUID postId){
+        boolean resp= postService.deletePost(postId);
+        if(resp)
+            return "Post deleted";
+        return "Post does not exist";
     }
 }

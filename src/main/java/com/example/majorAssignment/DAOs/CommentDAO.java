@@ -14,28 +14,23 @@ import java.util.UUID;
 public class CommentDAO implements CommetsDA0 {
     private final CommentsRepo commentsRepository;
     private final UserDAO userDAO;
-private final PostDAO postDAO;
     @Autowired
-    public CommentDAO(CommentsRepo commentsRepository,UserDAO userDAO,PostDAO postDAO) {
+    public CommentDAO(CommentsRepo commentsRepository,UserDAO userDAO) {
         this.commentsRepository = commentsRepository;
         this.userDAO = userDAO;
-        this.postDAO=postDAO;
+
     }
     private boolean checkCreator(UUID creatorId) {
         return userDAO.getUserById(creatorId).isPresent();
     }
 
-    private boolean checkPost(UUID postId) {
-        return postDAO.getPostById(postId).isPresent();
-    }
+
     // Add a new comment
     @Override
     public int addComment(@NonNull Comments comment) {
         comment.setCommentId(UUID.randomUUID());
         if(!checkCreator(comment.getCommentCreaterId()))//check if comment createrId is correct
             return 1;
-        else if(!checkPost(comment.getPostId()))
-            return 2;//check if post exits
         comment.setCommentId(comment.getCommentId()); // Set the commentId
         commentsRepository.save(comment); // Save the comment to the repository
         return 0;
@@ -53,7 +48,10 @@ private final PostDAO postDAO;
             return Optional.of(Collections.emptyList());
         return Optional.of(commentsList);
     }
-
+    public void deleteCommentByPostId(UUID postId) {
+        List<Comments> comments = commentsRepository.findByPostId(postId);
+        commentsRepository.deleteAll(comments);
+    }
     // Delete a comment by its ID
     public int deleteCommentById(UUID commentId) {
         if (commentsRepository.existsById(commentId)) {

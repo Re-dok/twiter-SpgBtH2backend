@@ -1,6 +1,7 @@
 package com.example.majorAssignment.Services;
 
 import com.example.majorAssignment.DAOs.CommentDAO;
+import com.example.majorAssignment.DAOs.PostDAO;
 import com.example.majorAssignment.model.Comments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,16 +12,22 @@ import java.util.UUID;
 
 @Service
 public class CommentsService {
+    private final PostDAO postDAO;
     private final CommentDAO commentDAO;
     public Optional<List<Comments>> getAllComments(){
         return commentDAO.getAllComments();
     }
 
     @Autowired
-    public CommentsService(CommentDAO commentDAO){
-        this.commentDAO=commentDAO;
+    public CommentsService(CommentDAO commentDAO,PostDAO postDAO){
+        this.commentDAO=commentDAO; this.postDAO=postDAO;
+    }
+    private boolean checkPost(UUID postId) {
+        return postDAO.getPostById(postId).isPresent();
     }
     public int addCommet(Comments comment){
+        if(!checkPost(comment.getPostId()))
+            return 2;//check if post exits
         return commentDAO.addComment(comment);
     }
     public int deleteCommentById(UUID commentId){
