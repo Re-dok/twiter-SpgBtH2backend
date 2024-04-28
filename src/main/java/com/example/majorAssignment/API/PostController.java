@@ -15,6 +15,7 @@ public class PostController {
     public PostController(PostService postService){
         this.postService=postService;
     }
+    //TODO add preqOBJ
     @PostMapping
     public String addPost(@RequestBody Post post) {
         int postStatus = postService.addPost(post);

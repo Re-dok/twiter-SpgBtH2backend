@@ -25,17 +25,18 @@ public class CommentsController {
 public CommentsController(CommentsService commentsService) {
             this.commentsService=commentsService;
     }
-   //TODO add the conditions for no bad creds
+   //TODO add reqObj
     @PostMapping
     public String addComment(@RequestBody Comments comment){
         int commAddStatus=commentsService.addCommet(comment);
         if(commAddStatus==1)
-            return "User id wrong";
+            return "User does not exist";
         else if(commAddStatus==2)
-            return "Post not available";
-        return "Commented";
+            return "Post does not exist";
+        return "Comment created successfully";
     }
-    //TODO should the input type be int only???
+    //TODO add reqObj
+
     @DeleteMapping
     public String deleteCommentById(@RequestBody Comments comment){
         int delStatus=commentsService.deleteCommentById(comment.getCommentId());
@@ -43,6 +44,7 @@ public CommentsController(CommentsService commentsService) {
                     return "Comment does not exist";
             return "Comment deleted";
     }
+    //TODO add reqObj
 
     @PatchMapping
     public String UpdateCommentById(@RequestBody Comments comments){
@@ -64,6 +66,7 @@ public CommentsController(CommentsService commentsService) {
             return Optional.of(Collections.emptyList());
         }
     }
+    //TODO add reqObj
     @GetMapping(path = "{commentId}")
     public ResponseEntity<?> getCommentById(@PathVariable("commentId")UUID commentId){
        Optional<Comments>commentStaus=commentsService.getCommentById(commentId);

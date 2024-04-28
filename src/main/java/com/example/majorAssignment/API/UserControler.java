@@ -3,15 +3,12 @@ package com.example.majorAssignment.API;
 import com.example.majorAssignment.Services.UserService;
 import com.example.majorAssignment.model.User;
 import com.example.majorAssignment.model.UserLoginRequest;
+import com.example.majorAssignment.model.UserResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 
@@ -22,15 +19,21 @@ public class UserControler {
     public UserControler(UserService userService) {
         this.userService = userService;
     }
-    @GetMapping(path = "getAllUsers")
-    public List<User> getAllUsers() {
+    //TODO remove password from the responce
+    @GetMapping
+    public List<UserResp> getAllUsers() {
         Optional<List<User>> optionalUsers = userService.getAllUsers();
         if (optionalUsers.isPresent()) {
             List<User> users = optionalUsers.get();
             if (users.isEmpty()) {
                 return Collections.emptyList();
             }
-            return users;
+            List<UserResp> userList=new ArrayList<>();
+            for (User userDet:users
+                 ) {
+                userList.add(new UserResp(userDet));
+            }
+            return userList;
         } else {
             return Collections.emptyList();
         }
@@ -49,6 +52,7 @@ public class UserControler {
             return "Username/Password Incorrect";
         return "Login Successful";
     }
+    //TODO make a requestOBJ to be used inplace of User
     @PostMapping("signup")
     public String signup(@RequestBody User user){
         int signupStatus=userService.signup(user);
