@@ -60,6 +60,7 @@ public class UserControler {
             return "Forbidden, Account already exists";
         return "Account Creation Successful";
     }
+
     @GetMapping(path="{userId}")
     public int getUserById(@PathVariable("userId")final UUID userId){
         if(userService.getUsersById(userId).isEmpty())

@@ -2,11 +2,14 @@ package com.example.majorAssignment.Services;
 
 import com.example.majorAssignment.DAOs.CommentDAO;
 import com.example.majorAssignment.DAOs.PostDAO;
+import com.example.majorAssignment.model.Comments;
 import com.example.majorAssignment.model.Post;
+import com.example.majorAssignment.model.PostResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -34,5 +37,13 @@ public class PostService {
         commentDAO.deleteCommentByPostId(postId);
         // Then delete the post
         return postDAO.deletePostById(postId) == 0;
+    }
+    public Optional<PostResp> getPostById(UUID postId){
+        Optional<Post> p=postDAO.getPostById(postId);
+        if(p.isEmpty())
+            return Optional.empty();
+        List<Comments> c=commentDAO.getCommentsByPostId(postId);
+        PostResp resp= new PostResp(p.get(),c);
+        return Optional.of(resp);
     }
 }

@@ -52,6 +52,9 @@ public class CommentDAO implements CommetsDA0 {
         List<Comments> comments = commentsRepository.findByPostId(postId);
         commentsRepository.deleteAll(comments);
     }
+    public List<Comments> getCommentsByPostId(UUID postId){
+        return commentsRepository.findByPostId(postId);
+    }
     // Delete a comment by its ID
     public int deleteCommentById(UUID commentId) {
         if (commentsRepository.existsById(commentId)) {

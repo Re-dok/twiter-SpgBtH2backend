@@ -2,10 +2,13 @@ package com.example.majorAssignment.API;
 
 import com.example.majorAssignment.Services.PostService;
 import com.example.majorAssignment.model.Post;
+import com.example.majorAssignment.model.PostResp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequestMapping("/post")
@@ -24,6 +27,13 @@ public class PostController {
             return "User does not exist";
         else
         return "Post created successfully";
+    }
+    @GetMapping(path = "{postId}")
+    public ResponseEntity<?> getPostById(@PathVariable("postId")UUID postId){
+        Optional<PostResp>resp= postService.getPostById(postId);
+        if(resp.isEmpty())
+            return ResponseEntity.ok("Post does not exist");
+        return ResponseEntity.ok(resp.get());
     }
     @GetMapping
     public List<Post> getAllPosts(){
