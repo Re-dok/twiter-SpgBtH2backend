@@ -5,6 +5,7 @@ import com.example.majorAssignment.model.User;
 import com.example.majorAssignment.model.UserLoginRequest;
 import com.example.majorAssignment.model.UserResp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,10 +63,12 @@ public class UserControler {
     }
 
     @GetMapping(path="{userId}")
-    public int getUserById(@PathVariable("userId")final UUID userId){
-        if(userService.getUsersById(userId).isEmpty())
-            return 1;//not present
-        return 0;//is present
+    public ResponseEntity<?> getUserById(@PathVariable("userId")final UUID userId){
+        Optional<User> u=(userService.getUsersById(userId));
+        if(u.isEmpty())
+            return ResponseEntity.ok("User does not exist");//not present
+        UserResp uRep= new UserResp(u.get());
+        return ResponseEntity.ok(uRep);//is present
     }
 
 }

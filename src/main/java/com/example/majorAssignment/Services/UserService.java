@@ -18,7 +18,7 @@ public class UserService {
     }
     public Optional<User> getUsersById(UUID userId){
         if(userDAO.getUserById(userId).isEmpty())
-            return Optional.of(null);//if user Not present
+            return Optional.empty();//if user Not present
         return userDAO.getUserById(userId);
     }
     @Autowired
