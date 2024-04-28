@@ -1,6 +1,8 @@
 package com.example.majorAssignment.API;
 
+import com.example.majorAssignment.Services.PostService;
 import com.example.majorAssignment.Services.UserService;
+import com.example.majorAssignment.model.PostResp;
 import com.example.majorAssignment.model.User;
 import com.example.majorAssignment.model.UserLoginRequest;
 import com.example.majorAssignment.model.UserResp;
@@ -16,12 +18,13 @@ import java.util.*;
 @RequestMapping("/")
 public class UserControler {
     private final UserService userService;
+    private final PostService postService;
     @Autowired
-    public UserControler(UserService userService) {
-        this.userService = userService;
+    public UserControler(UserService userService,PostService postService) {
+        this.userService = userService;this.postService=postService;
     }
     //TODO remove password from the responce
-    @GetMapping
+    @GetMapping("/getAllUsers")
     public List<UserResp> getAllUsers() {
         Optional<List<User>> optionalUsers = userService.getAllUsers();
         if (optionalUsers.isPresent()) {
@@ -39,7 +42,10 @@ public class UserControler {
             return Collections.emptyList();
         }
     }
-
+    @GetMapping
+    public List<PostResp> getFeed(){
+        return postService.getFeed();
+    }
     @PostMapping("login")
     public String loginUser(@RequestBody @NonNull UserLoginRequest loginRequest){
         if (loginRequest.getEmail() == null || loginRequest.getEmail().isEmpty() ||

@@ -8,9 +8,7 @@ import com.example.majorAssignment.model.PostResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -40,6 +38,17 @@ public class PostService {
     }
     public int updatePost(UUID id,String changedPostContent){
         return postDAO.updatePost(id,changedPostContent);
+    }
+    public List<PostResp> getFeed(){
+        List<Post> posts = getAllPosts();
+        List<PostResp> feed=new ArrayList<>();
+        for (Post p:posts
+             ) {
+            List<Comments> c=commentDAO.getCommentsByPostId(p.getPostId());
+            feed.add(new PostResp(p,c));
+        }
+        feed.sort(Comparator.comparing(postResp -> postResp.getPost().getPostDate(), Comparator.reverseOrder()));
+        return feed;
     }
     public Optional<PostResp> getPostById(UUID postId){
         Optional<Post> p=postDAO.getPostById(postId);
