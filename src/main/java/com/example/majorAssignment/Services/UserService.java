@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
+//import java.util.int;
 
 @Service
 public class UserService {
@@ -16,7 +16,7 @@ public class UserService {
     public Optional<List<User>> getAllUsers(){
         return userDAO.getAllUsers();
     }
-    public Optional<User> getUsersById(UUID userId){
+    public Optional<User> getUsersById(int userId){
         if(userDAO.getUserById(userId).isEmpty())
             return Optional.empty();//if user Not present
         return userDAO.getUserById(userId);

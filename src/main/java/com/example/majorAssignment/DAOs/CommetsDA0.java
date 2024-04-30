@@ -1,16 +1,15 @@
 package com.example.majorAssignment.DAOs;
 
 import com.example.majorAssignment.model.Comments;
+import org.springframework.lang.NonNull;
 
-import java.util.UUID;
+//import java.util.int;
 
 public interface CommetsDA0 {
-    default int addComment(UUID commentId, Comments comment){
-        return 1;
-    }
+
+    int addComment(int i,@NonNull Comments comment);
 
     default public int addComment(Comments comment){
-        UUID commentId=UUID.randomUUID();
-        return addComment(commentId,comment);
+        return addComment(comment.getCommentId(),comment);
     }
 }

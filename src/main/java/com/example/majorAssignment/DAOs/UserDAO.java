@@ -7,25 +7,26 @@ import org.springframework.stereotype.Repository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+//import java.util.int;
 
 @Repository
 public class UserDAO implements UserDA0 {
 
     public final UserRepo userRepository;
-
+    int baseUserId=1;
     @Autowired
     public UserDAO(UserRepo userRepository) {
         this.userRepository = userRepository;
     }
 
-    public int addUser(UUID userId, String email, String name, String password) {
+    public int addUser(int userId, String email, String name, String password) {
         // Check if user already exists
         if (userRepository.findByEmail(email).isPresent())
             return 1; // User already exists
-
+        userId=baseUserId;
+        baseUserId++;
         // Create and save the user
-        User user = new User(userId, email, name, password);
+        User user = new User(userId,email, name, password);
         userRepository.save(user);
         return 0; // New user added
     }
@@ -34,7 +35,7 @@ public class UserDAO implements UserDA0 {
         return userRepository.findByEmail(email);
     }
 
-    public Optional<User> getUserById(UUID userId) {
+    public Optional<User> getUserById(int userId) {
         return userRepository.findById(userId);
     }
 

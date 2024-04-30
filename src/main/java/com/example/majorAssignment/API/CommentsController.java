@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+//import java.util.int;
 
 
 @RequestMapping("/comment")
@@ -43,7 +43,7 @@ public CommentsController(CommentsService commentsService) {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteCommentById(@RequestParam(name = "CommentID")UUID commentID){
+    public ResponseEntity<?> deleteCommentById(@RequestParam(name = "CommentID")int commentID){
         int delStatus=commentsService.deleteCommentById(commentID);
             if(delStatus==1){
                 ErrorClass e=new ErrorClass("Comment does not exist");
@@ -75,7 +75,7 @@ public CommentsController(CommentsService commentsService) {
         }
     }
     @GetMapping
-    public ResponseEntity<?> getCommentById(@RequestParam(name="CommentID")UUID commentId){
+    public ResponseEntity<?> getCommentById(@RequestParam(name="CommentID")int commentId){
        Optional<Comments>commentStaus=commentsService.getCommentById(commentId);
        if(commentStaus.isEmpty()){
            ErrorClass e=new ErrorClass("Comment does not exist");

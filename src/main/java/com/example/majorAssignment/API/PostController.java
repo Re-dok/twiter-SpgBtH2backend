@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+//import java.util.int;
 
 @RequestMapping("/post")
 @RestController
@@ -32,7 +32,7 @@ public class PostController {
         return ResponseEntity.ok("Post created successfully");
     }
     @GetMapping
-    public ResponseEntity<?> getPostById(@RequestParam(name="postID")UUID postId){
+    public ResponseEntity<?> getPostById(@RequestParam(name="postID")int postId){
         Optional<PostResp>resp= postService.getPostById(postId);
         if(resp.isEmpty()){
             ErrorClass e=new ErrorClass("Post does not exist");
@@ -52,7 +52,7 @@ public class PostController {
         return postService.getAllPosts();
     }
     @DeleteMapping
-    public ResponseEntity<?> deletePost(@RequestParam(name="postID") UUID postId){
+    public ResponseEntity<?> deletePost(@RequestParam(name="postID") int postId){
         boolean resp= postService.deletePost(postId);
         if(resp)
             return ResponseEntity.ok("Post deleted");

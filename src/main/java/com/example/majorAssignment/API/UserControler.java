@@ -72,7 +72,7 @@ public class UserControler {
     }
 
     @GetMapping("user")
-    public ResponseEntity<?> getUserById(@RequestParam(name = "userID") final UUID userId){
+    public ResponseEntity<?> getUserById(@RequestParam(name = "userID") final int userId){
         Optional<User> u=(userService.getUsersById(userId));
         if(u.isEmpty())
             return ResponseEntity.ok("User does not exist");//not present

@@ -5,14 +5,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import javax.validation.constraints.Email;
-import java.util.UUID;
+//import java.util.int;
 
 @Entity
 @Table(name = "user_table")
 public class User {
 
     @Id
-    private UUID id;
+    private int id;
 
 //    @NotBlank(message = "Name is required")
     private String name;
@@ -24,11 +24,11 @@ public class User {
 //    @NotBlank(message = "Password is required")
     private String password;
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -55,12 +55,20 @@ public class User {
     public String getPassword() {
         return password;
     }
-
-    public User() {
-        this.id = UUID.randomUUID();
-    }
-
-    public User(UUID id, String email, String name, String password) {
+    public User(int userid){
+        this.id=userid;
+    };
+//    public User(@JsonProperty("email")String email,
+//                @JsonProperty("name") String name,
+//                @JsonProperty("password") String password){
+//        this.name = name;
+//        this.email = email;
+//        this.password = password;
+//    }
+public User() {
+    // Default constructor
+}
+    public User(int id,String email, String name, String password) {
         this.id = id;
         this.name = name;
         this.email = email;

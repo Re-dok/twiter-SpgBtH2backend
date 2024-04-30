@@ -30,13 +30,13 @@ public class PostService {
         return postDAO.getAllPosts();
     }
 
-    public boolean deletePost(UUID postId) {
+    public boolean deletePost(int postId) {
         // Delete comments associated with the post first
         commentDAO.deleteCommentByPostId(postId);
         // Then delete the post
         return postDAO.deletePostById(postId) == 0;
     }
-    public int updatePost(UUID id,String changedPostContent){
+    public int updatePost(int id,String changedPostContent){
         return postDAO.updatePost(id,changedPostContent);
     }
     public List<PostResp> getFeed(){
@@ -50,7 +50,7 @@ public class PostService {
         feed.sort(Comparator.comparing(postResp -> postResp.getDate(), Comparator.reverseOrder()));
         return feed;
     }
-    public Optional<PostResp> getPostById(UUID postId){
+    public Optional<PostResp> getPostById(int postId){
         Optional<Post> p=postDAO.getPostById(postId);
         if(p.isEmpty())
             return Optional.empty();

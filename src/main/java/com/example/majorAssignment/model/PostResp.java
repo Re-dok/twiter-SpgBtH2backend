@@ -3,16 +3,16 @@ package com.example.majorAssignment.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+//import java.util.int;
 class CommentCreaterDis{
-    private UUID userID;
+    private int userID;
     private String name;
 
-    public UUID getUserID() {
+    public int getUserID() {
         return userID;
     }
 
-    public void setUserID(UUID userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
@@ -23,13 +23,13 @@ class CommentCreaterDis{
     public void setName(String name) {
         this.name = name;
     }
-    public CommentCreaterDis(String name,UUID id){
+    public CommentCreaterDis(String name,int id){
         this.name=name;
         this.userID=id;
     }
 }
 class commentsDisp{
-    private UUID commentID;
+    private int commentID;
 
     private String commentBody;
     private CommentCreaterDis commentCreator;
@@ -39,7 +39,7 @@ class commentsDisp{
         this.commentCreator=new CommentCreaterDis(comments.getCommentCreaterName(),comments.getCommentCreaterId());
         }
 
-    public void setCommentID(UUID commentId) {this.commentID=commentId;}
+    public void setCommentID(int commentId) {this.commentID=commentId;}
 
 
 
@@ -51,7 +51,7 @@ class commentsDisp{
         this.commentCreator = commentCreater;
     }
 
-    public UUID getCommentID() {
+    public int getCommentID() {
         return commentID;
     }
 
@@ -66,7 +66,7 @@ class commentsDisp{
 }
 public class PostResp{
 
-    private UUID postID;
+    private int postID;
     private String postBody;
     private Date date;
     List<commentsDisp> comments=new ArrayList<>();
@@ -74,11 +74,11 @@ public class PostResp{
         return comments;
     }
 
-    public UUID getPostID() {
+    public int getPostID() {
         return postID;
     }
 
-    public void setPostID(UUID postID) {
+    public void setPostID(int postID) {
         this.postID = postID;
     }
 

@@ -1,14 +1,10 @@
 package com.example.majorAssignment.DAOs;
 
-import com.example.majorAssignment.model.Comments;
-import com.example.majorAssignment.model.User;
-
-import java.util.UUID;
-
 public interface UserDA0 {
-    int addUser(UUID userId,String email,String name,String password);
+    int baseUserId=1;
+
+    int addUser(int userId,String email,String name,String password);
     default public int addUser(String email,String name,String password){
-        UUID userId=UUID.randomUUID();
-        return addUser(userId,email,name,password);
+        return addUser(1,email,name,password);
     }
 }

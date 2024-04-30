@@ -8,43 +8,44 @@ import org.springframework.stereotype.Repository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+//import java.util.int;
 
 @Repository
 public class CommentDAO implements CommetsDA0 {
     private final CommentsRepo commentsRepository;
     private final UserDAO userDAO;
+    private int commentBaseId=1;
     @Autowired
     public CommentDAO(CommentsRepo commentsRepository,UserDAO userDAO) {
         this.commentsRepository = commentsRepository;
         this.userDAO = userDAO;
 
     }
-    private boolean checkCreator(UUID creatorId) {
+    private boolean checkCreator(int creatorId) {
         return userDAO.getUserById(creatorId).isPresent();
     }
 
 
     // Add a new comment
     @Override
-    public int addComment(@NonNull Comments comment) {
-        comment.setCommentId(UUID.randomUUID());
+    public int addComment(int i,@NonNull Comments comment) {
         if(!checkCreator(comment.getCommentCreaterId()))//check if comment createrId is correct
         {
             return 1;
         }
         comment.setCommentCreaterName( userDAO.getUserById(comment.getCommentCreaterId()).get().getName());
-        comment.setCommentId(comment.getCommentId()); // Set the commentId
+        comment.setCommentId(commentBaseId);
+        commentBaseId++;// Set the commentId
         commentsRepository.save(comment); // Save the comment to the repository
         return 0;
     }
 
     // Get a comment by its ID
-    public Optional<Comments> getCommentById(UUID commentId) {
+    public Optional<Comments> getCommentById(int commentId) {
         Optional<Comments>c=commentsRepository.findById(commentId);
         if(c.isEmpty())
             return Optional.empty();
-        UUID userId=c.get().getCommentCreaterId();
+        int userId=c.get().getCommentCreaterId();
         String name = userDAO.getUserById(userId).get().getName();
             return Optional.of(c.get());
     }
@@ -56,15 +57,15 @@ public class CommentDAO implements CommetsDA0 {
             return Optional.of(Collections.emptyList());
         return Optional.of(commentsList);
     }
-    public void deleteCommentByPostId(UUID postId) {
+    public void deleteCommentByPostId(int postId) {
         List<Comments> comments = commentsRepository.findByPostId(postId);
         commentsRepository.deleteAll(comments);
     }
-    public List<Comments> getCommentsByPostId(UUID postId){
+    public List<Comments> getCommentsByPostId(int postId){
         return commentsRepository.findByPostId(postId);
     }
     // Delete a comment by its ID
-    public int deleteCommentById(UUID commentId) {
+    public int deleteCommentById(int commentId) {
         if (commentsRepository.existsById(commentId)) {
             commentsRepository.deleteById(commentId);
             return 0; // Successfully deleted
@@ -74,7 +75,7 @@ public class CommentDAO implements CommetsDA0 {
     }
 
     // Update a comment by its ID
-    public int updateCommentById(UUID commentId, Comments changedComment) {
+    public int updateCommentById(int commentId, Comments changedComment) {
         if (commentsRepository.existsById(commentId)) {
             changedComment.setCommentId(commentId); // Ensure the ID is set
             commentsRepository.save(changedComment); // Save the updated comment

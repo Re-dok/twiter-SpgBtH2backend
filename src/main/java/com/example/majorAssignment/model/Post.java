@@ -7,13 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.util.Date;
-import java.util.UUID;
+//import java.util.int;
 
 @Entity
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID postId;
+    private int postId;
     private Date postDate;
     public Date getPostDate() {
         return postDate;
@@ -23,12 +23,9 @@ public class Post {
         this.postDate = postDate;
     }
 
-    public Post() {
-        this.postId = UUID.randomUUID(); // Generate a random UUID
-        // You may also initialize other fields here if needed
-    }
-    public Post(@JsonProperty("postID")UUID postId,
-               @JsonProperty("userID") UUID postCreaterId,
+
+    public Post(@JsonProperty("postID")int postId,
+               @JsonProperty("userID") int postCreaterId,
                @JsonProperty("postBody") String postContent) {
         this.postId = postId;
         this.postCreaterId = postCreaterId;
@@ -36,25 +33,25 @@ public class Post {
         this.postDate=new Date();
     }
 
-    public void setPostId(UUID postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
-    public void setPostCreaterId(UUID postCreaterId) {
+    public void setPostCreaterId(int postCreaterId) {
         this.postCreaterId = postCreaterId;
     }
 
     public void setPostContent(String postContent) {
         this.postContent = postContent;
     }
+    public Post(){};
+    private int postCreaterId;
 
-    private UUID postCreaterId;
-
-    public UUID getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public UUID getPostCreaterId() {
+    public int getPostCreaterId() {
         return postCreaterId;
     }
 

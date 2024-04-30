@@ -2,21 +2,21 @@ package com.example.majorAssignment.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
+//import java.util.int;
 class semiUser{
-    UUID uid;
+    int uid;
     String name;
 
-    public semiUser(@JsonProperty("userID")UUID uid,@JsonProperty("name") String name) {
+    public semiUser(@JsonProperty("userID")int uid,@JsonProperty("name") String name) {
         this.uid = uid;
         this.name = name;
     }
 
-    public UUID getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(UUID uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 
@@ -29,7 +29,7 @@ class semiUser{
     }
 }
 public class CommetResp {
-    UUID commentID;
+    int commentID;
     String commentBody;
     semiUser commentCreator;
 
@@ -39,11 +39,11 @@ public class CommetResp {
         this.commentCreator = new semiUser(c.getCommentCreaterId(),c.getCommentCreaterName());
     }
 
-    public UUID getCommentID() {
+    public int getCommentID() {
         return commentID;
     }
 
-    public void setCommentID(UUID commentID) {
+    public void setCommentID(int commentID) {
         this.commentID = commentID;
     }
 

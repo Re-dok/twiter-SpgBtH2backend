@@ -6,13 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+//import java.util.int;
 
 @Repository
 public class PostDAO implements PostDA0 {
 
     private final PostRepo postRepository;
     private final UserDAO userDAO;
+    private int postBaseId=1;
 
     @Autowired
     public PostDAO(PostRepo postRepository, UserDAO userDAO) {
@@ -21,17 +22,17 @@ public class PostDAO implements PostDA0 {
     }
 
     @Override
-    public int addPost(UUID postId, Post post) {
+    public int addPost(int postId, Post post,int f) {
         // Check if the post creator exists
         if (!checkCreator(post.getPostCreaterId()))
             return 1; // User doesn't exist
-
+        postId=postBaseId;
+        postBaseId++;
         // Save the post to the database
         postRepository.save(post);
-
         return 0; // Post added successfully
     }
-    public int updatePost(UUID postId,String changedPostContent){
+    public int updatePost(int postId,String changedPostContent){
         Optional<Post> currentPost = getPostById(postId);
         if (currentPost.isEmpty())
             return 1; // Post does not exist
@@ -41,13 +42,13 @@ public class PostDAO implements PostDA0 {
         int result = postRepository.updatePostById(postId, changedPostContent);
         return 0;
     }
-    public Optional<Post> getPostById(UUID id){
+    public Optional<Post> getPostById(int id){
         return postRepository.findById(id);
     }
-    private boolean checkCreator(UUID creatorId) {
+    private boolean checkCreator(int creatorId) {
         return userDAO.getUserById(creatorId).isPresent();
     }
-    public int deletePostById(UUID postId) {
+    public int deletePostById(int postId) {
         if (postRepository.existsById(postId)) {
             postRepository.deleteById(postId);
             return 0; // Successfully deleted

@@ -5,32 +5,33 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import org.springframework.lang.NonNull;
 
-import java.util.UUID;
+//import java.util.int;
 @Entity
 public class Comments {
     @Id
     @NonNull
-    private  UUID commentId;
-
+    private  int commentId;
+    private int commentIdBase=1;
     private String commentContent;
     private String commentCreaterName;
-    public void setCommentId(UUID commentId) {this.commentId=commentId;}
-    private UUID postId;
+    public void setCommentId(int commentId) {this.commentId=commentId;}
+    private int postId;
     public Comments() {
-        this.commentId = UUID.randomUUID(); // Generate a random UUID
+        this.commentId = commentIdBase;
+        commentIdBase++;// Generate a random int
         // You may also initialize other fields here if needed
     }
     public void setCommentContent(String commentContent) {
         this.commentContent = commentContent;
     }
 
-    private  UUID commentCreaterId;
+    private  int commentCreaterId;
 
-    public UUID getCommentId() {
+    public int getCommentId() {
         return commentId;
     }
 
-    public UUID getPostId() {
+    public int getPostId() {
         return postId;
     }
 
@@ -38,7 +39,7 @@ public class Comments {
         return commentCreaterName;
     }
 
-    public UUID getCommentCreaterId() {
+    public int getCommentCreaterId() {
         return commentCreaterId;
     }
 
@@ -50,9 +51,9 @@ public class Comments {
         return commentContent;
     }
 
-    public Comments(@JsonProperty("commentID")UUID commentId,
-                    @JsonProperty("postID") UUID postId,
-                    @JsonProperty("userID")UUID commentCreaterId,
+    public Comments(@JsonProperty("commentID")int commentId,
+                    @JsonProperty("postID") int postId,
+                    @JsonProperty("userID")int commentCreaterId,
                     @JsonProperty("commentBody")String commentContent,
                     @JsonProperty("name")String commentCreaterName) {
         this.commentId = commentId;

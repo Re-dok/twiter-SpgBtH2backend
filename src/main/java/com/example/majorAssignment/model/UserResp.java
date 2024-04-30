@@ -1,23 +1,23 @@
 package com.example.majorAssignment.model;
 
-import java.util.UUID;
+//import java.util.int;
 
 
 
 public class UserResp {
 
     private String name;
-    private UUID userID;
+    private int userID;
 
 
 
     private String email;
 
-    public UUID getUserID() {
+    public int getUserID() {
         return userID;
     }
 
-    public void setUserID(UUID userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
