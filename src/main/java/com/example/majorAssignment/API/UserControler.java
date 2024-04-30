@@ -39,8 +39,9 @@ public class UserControler {
         }
     }
     @GetMapping
-    public List<PostResp> getFeed(){
-        return postService.getFeed();
+    public FeedResp getFeed(){
+        FeedResp feed=new FeedResp(postService.getFeed());
+        return feed;
     }
     @PostMapping("login")
     public ResponseEntity<?> loginUser(@RequestBody @NonNull UserLoginRequest loginRequest){

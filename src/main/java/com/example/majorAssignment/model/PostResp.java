@@ -33,26 +33,21 @@ class commentsDisp{
 
     private String commentBody;
     private CommentCreaterDis commentCreator;
-    public void setCommentId(UUID commentId) {this.commentID=commentId;}
-
     public commentsDisp(Comments comments) {
         this.commentID = comments.getCommentId();
         this.commentBody=comments.getCommentContent();
         this.commentCreator=new CommentCreaterDis(comments.getCommentCreaterName(),comments.getCommentCreaterId());
         }
-    public void setCommentContent(String commentContent) {
-        this.commentBody = commentContent;
-    }
 
-    public void setCommentID(UUID commentID) {
-        this.commentID = commentID;
-    }
+    public void setCommentID(UUID commentId) {this.commentID=commentId;}
+
+
 
     public void setCommentBody(String commentBody) {
         this.commentBody = commentBody;
     }
 
-    public void setCommentCreater(CommentCreaterDis commentCreater) {
+    public void setCommentCreator(CommentCreaterDis commentCreater) {
         this.commentCreator = commentCreater;
     }
 
@@ -64,16 +59,8 @@ class commentsDisp{
         return commentBody;
     }
 
-    public CommentCreaterDis getCommentCreater() {
+    public CommentCreaterDis getCommentCreator() {
         return commentCreator;
-    }
-
-    public UUID getCommentId() {
-        return commentID;
-    }
-
-    public String getCommentContent() {
-        return commentBody;
     }
 
 }
@@ -83,7 +70,7 @@ public class PostResp{
     private String postBody;
     private Date date;
     List<commentsDisp> comments=new ArrayList<>();
-    public List<commentsDisp> getCommentsOnPost() {
+    public List<commentsDisp> getcomments() {
         return comments;
     }
 
@@ -111,11 +98,8 @@ public class PostResp{
         this.date = date;
     }
 
-    public List<commentsDisp> getComments() {
-        return comments;
-    }
 
-    public void setComments(List<commentsDisp> comments) {
+    public void setcomments(List<commentsDisp> comments) {
         this.comments = comments;
     }
 
