@@ -30,7 +30,10 @@ public class CommentDAO implements CommetsDA0 {
     public int addComment(@NonNull Comments comment) {
         comment.setCommentId(UUID.randomUUID());
         if(!checkCreator(comment.getCommentCreaterId()))//check if comment createrId is correct
+        {
             return 1;
+        }
+        comment.setCommentCreaterName( userDAO.getUserById(comment.getCommentCreaterId()).get().getName());
         comment.setCommentId(comment.getCommentId()); // Set the commentId
         commentsRepository.save(comment); // Save the comment to the repository
         return 0;
@@ -38,7 +41,12 @@ public class CommentDAO implements CommetsDA0 {
 
     // Get a comment by its ID
     public Optional<Comments> getCommentById(UUID commentId) {
-        return commentsRepository.findById(commentId);
+        Optional<Comments>c=commentsRepository.findById(commentId);
+        if(c.isEmpty())
+            return Optional.empty();
+        UUID userId=c.get().getCommentCreaterId();
+        String name = userDAO.getUserById(userId).get().getName();
+            return Optional.of(c.get());
     }
 
     // Get all comments

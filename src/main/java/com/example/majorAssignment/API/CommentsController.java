@@ -2,6 +2,8 @@ package com.example.majorAssignment.API;
 
 import com.example.majorAssignment.Services.CommentsService;
 import com.example.majorAssignment.model.Comments;
+import com.example.majorAssignment.model.CommetResp;
+import com.example.majorAssignment.model.ErrorClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,31 +29,39 @@ public CommentsController(CommentsService commentsService) {
     }
    //TODO add reqObj
     @PostMapping
-    public String addComment(@RequestBody Comments comment){
+    public ResponseEntity<?> addComment(@RequestBody Comments comment){
         int commAddStatus=commentsService.addCommet(comment);
-        if(commAddStatus==1)
-            return "User does not exist";
-        else if(commAddStatus==2)
-            return "Post does not exist";
-        return "Comment created successfully";
+        if(commAddStatus==1){
+            ErrorClass e=new ErrorClass("User does not exist");
+            return ResponseEntity.ok(e);
+        }
+        else if(commAddStatus==2) {
+            ErrorClass e=new ErrorClass("Post does not exist");
+            return ResponseEntity.ok(e);
+        }
+        return ResponseEntity.ok("Comment created successfully");
     }
     //TODO add reqObj
 
     @DeleteMapping
-    public String deleteCommentById(@RequestBody Comments comment){
+    public ResponseEntity<?> deleteCommentById(@RequestBody Comments comment){
         int delStatus=commentsService.deleteCommentById(comment.getCommentId());
-            if(delStatus==1)
-                    return "Comment does not exist";
-            return "Comment deleted";
+            if(delStatus==1){
+                ErrorClass e=new ErrorClass("Comment does not exist");
+                return ResponseEntity.ok(e);
+            }
+            return ResponseEntity.ok("Comment deleted");
     }
     //TODO add reqObj
 
     @PatchMapping
-    public String UpdateCommentById(@RequestBody Comments comments){
+    public ResponseEntity<?> UpdateCommentById(@RequestBody Comments comments){
         int updateStatus=commentsService.updateCommentById(comments.getCommentId(),comments.getCommentContent());
-        if(updateStatus==1)
-                return "Comment does not exist";
-        return "Comment edited successfully";
+        if(updateStatus==1){
+            ErrorClass e=new ErrorClass("Comment does not exist");
+            return ResponseEntity.ok(e);
+        }
+        return ResponseEntity.ok("Comment edited successfully");
     }
     @GetMapping
     public Optional<List<Comments>> getAllComments() {
@@ -70,8 +80,11 @@ public CommentsController(CommentsService commentsService) {
     @GetMapping(path = "{commentId}")
     public ResponseEntity<?> getCommentById(@PathVariable("commentId")UUID commentId){
        Optional<Comments>commentStaus=commentsService.getCommentById(commentId);
-       if(commentStaus.isEmpty())
-           return ResponseEntity.ok("Comment does not exist");
-        return ResponseEntity.ok(commentStaus.get());
+       if(commentStaus.isEmpty()){
+           ErrorClass e=new ErrorClass("Comment does not exist");
+           return ResponseEntity.ok(e);
+       }
+        CommetResp resp=new CommetResp(commentStaus.get());
+        return ResponseEntity.ok(resp);
     }
 }

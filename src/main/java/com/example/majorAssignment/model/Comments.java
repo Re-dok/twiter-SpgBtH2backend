@@ -11,6 +11,9 @@ public class Comments {
     @Id
     @NonNull
     private  UUID commentId;
+
+    private String commentContent;
+    private String commentCreaterName;
     public void setCommentId(UUID commentId) {this.commentId=commentId;}
     private UUID postId;
     public Comments() {
@@ -22,7 +25,6 @@ public class Comments {
     }
 
     private  UUID commentCreaterId;
-    private String commentContent;
 
     public UUID getCommentId() {
         return commentId;
@@ -32,19 +34,27 @@ public class Comments {
         return postId;
     }
 
+    public String getCommentCreaterName() {
+        return commentCreaterName;
+    }
+
     public UUID getCommentCreaterId() {
         return commentCreaterId;
+    }
+
+    public void setCommentCreaterName(String commentCreaterName) {
+        this.commentCreaterName = commentCreaterName;
     }
 
     public String getCommentContent() {
         return commentContent;
     }
 
-
-    public Comments(@JsonProperty("commentId")UUID commentId,
-                    @JsonProperty("postId") UUID postId,
-                    @JsonProperty("commentCreaterId")UUID commentCreaterId,
-                    @JsonProperty("commentContent")String commentContent) {
+    public Comments(@JsonProperty("commentID")UUID commentId,
+                    @JsonProperty("postID") UUID postId,
+                    @JsonProperty("userID")UUID commentCreaterId,
+                    @JsonProperty("commentBody")String commentContent,
+                    @JsonProperty("name")String commentCreaterName) {
         this.commentId = commentId;
         this.postId = postId;
         this.commentCreaterId = commentCreaterId;
