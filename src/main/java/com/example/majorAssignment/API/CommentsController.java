@@ -5,11 +5,13 @@ import com.example.majorAssignment.model.Comments;
 import com.example.majorAssignment.model.CommetResp;
 import com.example.majorAssignment.model.ErrorClass;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 //import java.util.int;
 
@@ -18,26 +20,23 @@ import java.util.Optional;
 @RestController
 public class CommentsController {
     private final CommentsService commentsService;
-//TODO remove the hello call here
-    @GetMapping("/hello")
-    public String helloWorld() {
-        return "Hello, World!";
-    }
+
+
 @Autowired
 public CommentsController(CommentsService commentsService) {
             this.commentsService=commentsService;
     }
-   //TODO add reqObj
+
     @PostMapping
     public ResponseEntity<?> addComment(@RequestBody Comments comment){
         int commAddStatus=commentsService.addCommet(comment);
         if(commAddStatus==1){
             ErrorClass e=new ErrorClass("User does not exist");
-            return ResponseEntity.ok(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Error",e.getError()));
         }
         else if(commAddStatus==2) {
             ErrorClass e=new ErrorClass("Post does not exist");
-            return ResponseEntity.ok(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Error",e.getError()));
         }
         return ResponseEntity.ok("Comment created successfully");
     }
@@ -47,7 +46,7 @@ public CommentsController(CommentsService commentsService) {
         int delStatus=commentsService.deleteCommentById(commentID);
             if(delStatus==1){
                 ErrorClass e=new ErrorClass("Comment does not exist");
-                return ResponseEntity.ok(e);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Error",e.getError()));
             }
             return ResponseEntity.ok("Comment deleted");
     }
@@ -57,7 +56,7 @@ public CommentsController(CommentsService commentsService) {
         int updateStatus=commentsService.updateCommentById(comments.getCommentId(),comments.getCommentContent());
         if(updateStatus==1){
             ErrorClass e=new ErrorClass("Comment does not exist");
-            return ResponseEntity.ok(e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Error",e.getError()));
         }
         return ResponseEntity.ok("Comment edited successfully");
     }
@@ -79,7 +78,7 @@ public CommentsController(CommentsService commentsService) {
        Optional<Comments>commentStaus=commentsService.getCommentById(commentId);
        if(commentStaus.isEmpty()){
            ErrorClass e=new ErrorClass("Comment does not exist");
-           return ResponseEntity.ok(e);
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("Error",e.getError()));
        }
         CommetResp resp=new CommetResp(commentStaus.get());
         return ResponseEntity.ok(resp);
