@@ -63,7 +63,7 @@ public CommentsController(CommentsService commentsService) {
         }
         return ResponseEntity.ok("Comment edited successfully");
     }
-    @GetMapping
+    @GetMapping(path ="/getAllcomments")
     public Optional<List<Comments>> getAllComments() {
         Optional<List<Comments>> optionalComments = commentsService.getAllComments();
         if (optionalComments.isPresent()) {
@@ -77,8 +77,8 @@ public CommentsController(CommentsService commentsService) {
         }
     }
     //TODO add reqObj
-    @GetMapping(path = "{commentId}")
-    public ResponseEntity<?> getCommentById(@PathVariable("commentId")UUID commentId){
+    @GetMapping
+    public ResponseEntity<?> getCommentById(@RequestParam(name="CommentID")UUID commentId){
        Optional<Comments>commentStaus=commentsService.getCommentById(commentId);
        if(commentStaus.isEmpty()){
            ErrorClass e=new ErrorClass("Comment does not exist");

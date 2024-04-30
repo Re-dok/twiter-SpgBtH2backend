@@ -2,10 +2,7 @@ package com.example.majorAssignment.API;
 
 import com.example.majorAssignment.Services.PostService;
 import com.example.majorAssignment.Services.UserService;
-import com.example.majorAssignment.model.PostResp;
-import com.example.majorAssignment.model.User;
-import com.example.majorAssignment.model.UserLoginRequest;
-import com.example.majorAssignment.model.UserResp;
+import com.example.majorAssignment.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -24,7 +21,7 @@ public class UserControler {
         this.userService = userService;this.postService=postService;
     }
     //TODO remove password from the responce
-    @GetMapping("/getAllUsers")
+    @GetMapping("/users")
     public List<UserResp> getAllUsers() {
         Optional<List<User>> optionalUsers = userService.getAllUsers();
         if (optionalUsers.isPresent()) {
@@ -47,29 +44,35 @@ public class UserControler {
         return postService.getFeed();
     }
     @PostMapping("login")
-    public String loginUser(@RequestBody @NonNull UserLoginRequest loginRequest){
+    public ResponseEntity<?> loginUser(@RequestBody @NonNull UserLoginRequest loginRequest){
         if (loginRequest.getEmail() == null || loginRequest.getEmail().isEmpty() ||
                 loginRequest.getPassword() == null || loginRequest.getPassword().isEmpty()) {
-            return "Invalid login request"; // Check if email or password is empty
+            ErrorClass e=new ErrorClass("Username/Password Incorrect"); // Check if email or password is empty
+            return ResponseEntity.ok(e);
         }
         int loginSatuts=userService.login(loginRequest.getEmail(),loginRequest.getPassword());
-        if(loginSatuts==1)
-            return "User does not exist";
-        else if(loginSatuts==2)
-            return "Username/Password Incorrect";
-        return "Login Successful";
+        if(loginSatuts==1){
+            ErrorClass e=new ErrorClass("User does not exist");
+            return ResponseEntity.ok(e);
+        }
+        else if(loginSatuts==2){
+            ErrorClass e=new ErrorClass("Username/Password Incorrect");
+            return ResponseEntity.ok(e);
+        }
+        return ResponseEntity.ok("Login Successful");
     }
-    //TODO make a requestOBJ to be used inplace of User
     @PostMapping("signup")
-    public String signup(@RequestBody User user){
+    public ResponseEntity<?> signup(@RequestBody User user){
         int signupStatus=userService.signup(user);
-        if(signupStatus==1)
-            return "Forbidden, Account already exists";
-        return "Account Creation Successful";
+        if(signupStatus==1) {
+            ErrorClass e=new ErrorClass("Forbidden, Account already exists");
+            return ResponseEntity.ok(e);
+        }
+        return ResponseEntity.ok("Account Creation Successful");
     }
 
-    @GetMapping(path="{userId}")
-    public ResponseEntity<?> getUserById(@PathVariable("userId")final UUID userId){
+    @GetMapping("user")
+    public ResponseEntity<?> getUserById(@RequestParam(name = "userID") final UUID userId){
         Optional<User> u=(userService.getUsersById(userId));
         if(u.isEmpty())
             return ResponseEntity.ok("User does not exist");//not present

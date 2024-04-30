@@ -6,22 +6,19 @@ import java.util.UUID;
 
 public class UserResp {
 
-
-
-
     private String name;
-    private UUID id;
+    private UUID userId;
 
 
 
     private String email;
 
-    public UUID getId() {
-        return id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public void setName(String name) {
@@ -45,7 +42,7 @@ public class UserResp {
 
     public UserResp(User user) {
         this.name = user.getName();
-        this.id = user.getId();
+        this.userId = user.getId();
         this.email = user.getEmail();
     }
 
