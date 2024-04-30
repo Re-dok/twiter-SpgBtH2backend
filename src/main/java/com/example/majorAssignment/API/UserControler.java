@@ -20,7 +20,6 @@ public class UserControler {
     public UserControler(UserService userService,PostService postService) {
         this.userService = userService;this.postService=postService;
     }
-    //TODO remove password from the responce
     @GetMapping("/users")
     public List<UserResp> getAllUsers() {
         Optional<List<User>> optionalUsers = userService.getAllUsers();

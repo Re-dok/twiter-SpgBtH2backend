@@ -7,18 +7,18 @@ import java.util.UUID;
 public class UserResp {
 
     private String name;
-    private UUID userId;
+    private UUID userID;
 
 
 
     private String email;
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getUserID() {
+        return userID;
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
+    public void setUserID(UUID userID) {
+        this.userID = userID;
     }
 
     public void setName(String name) {
@@ -42,7 +42,7 @@ public class UserResp {
 
     public UserResp(User user) {
         this.name = user.getName();
-        this.userId = user.getId();
+        this.userID = user.getId();
         this.email = user.getEmail();
     }
 

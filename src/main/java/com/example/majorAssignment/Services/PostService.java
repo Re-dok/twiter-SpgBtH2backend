@@ -47,7 +47,7 @@ public class PostService {
             List<Comments> c=commentDAO.getCommentsByPostId(p.getPostId());
             feed.add(new PostResp(p,c));
         }
-        feed.sort(Comparator.comparing(postResp -> postResp.getPost().getPostDate(), Comparator.reverseOrder()));
+        feed.sort(Comparator.comparing(postResp -> postResp.getDate(), Comparator.reverseOrder()));
         return feed;
     }
     public Optional<PostResp> getPostById(UUID postId){

@@ -1,6 +1,7 @@
 package com.example.majorAssignment.API;
 
 import com.example.majorAssignment.Services.PostService;
+import com.example.majorAssignment.model.ErrorClass;
 import com.example.majorAssignment.model.Post;
 import com.example.majorAssignment.model.PostResp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,35 +22,41 @@ public class PostController {
     }
     //TODO add preqOBJ
     @PostMapping
-    public String addPost(@RequestBody Post post) {
+    public ResponseEntity<?> addPost(@RequestBody Post post) {
         int postStatus = postService.addPost(post);
-        if(postStatus==1)
-            return "User does not exist";
+        if(postStatus==1){
+            ErrorClass e=new ErrorClass("User does not exist");
+            return ResponseEntity.ok(e);
+        }
         else
-        return "Post created successfully";
+        return ResponseEntity.ok("Post created successfully");
     }
-    @GetMapping(path = "{postId}")
-    public ResponseEntity<?> getPostById(@PathVariable("postId")UUID postId){
+    @GetMapping
+    public ResponseEntity<?> getPostById(@RequestParam(name="postID")UUID postId){
         Optional<PostResp>resp= postService.getPostById(postId);
-        if(resp.isEmpty())
-            return ResponseEntity.ok("Post does not exist");
+        if(resp.isEmpty()){
+            ErrorClass e=new ErrorClass("Post does not exist");
+            return ResponseEntity.ok(e);
+        }
         return ResponseEntity.ok(resp.get());
     }
     @PatchMapping
-    public ResponseEntity<String> updatePost(@RequestBody Post changedPost){
+    public ResponseEntity<?> updatePost(@RequestBody Post changedPost){
         if(postService.updatePost(changedPost.getPostId(),changedPost.getPostContent())==0)
             return ResponseEntity.ok("Post edited successfully");
-        return ResponseEntity.ok("Post does not exist");
+        ErrorClass e=new ErrorClass("Post does not exist");
+        return ResponseEntity.ok(e);
     }
-    @GetMapping
+    @GetMapping(path = "getAllPost")
     public List<Post> getAllPosts(){
         return postService.getAllPosts();
     }
-    @DeleteMapping(path = "{postId}")
-    public String deletePost(@PathVariable("postId") UUID postId){
+    @DeleteMapping
+    public ResponseEntity<?> deletePost(@RequestParam(name="postID") UUID postId){
         boolean resp= postService.deletePost(postId);
         if(resp)
-            return "Post deleted";
-        return "Post does not exist";
+            return ResponseEntity.ok("Post deleted");
+        ErrorClass e=new ErrorClass("Post does not exist");
+        return ResponseEntity.ok(e);
     }
 }

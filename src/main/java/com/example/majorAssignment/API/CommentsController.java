@@ -41,18 +41,16 @@ public CommentsController(CommentsService commentsService) {
         }
         return ResponseEntity.ok("Comment created successfully");
     }
-    //TODO add reqObj
 
     @DeleteMapping
-    public ResponseEntity<?> deleteCommentById(@RequestBody Comments comment){
-        int delStatus=commentsService.deleteCommentById(comment.getCommentId());
+    public ResponseEntity<?> deleteCommentById(@RequestParam(name = "CommentID")UUID commentID){
+        int delStatus=commentsService.deleteCommentById(commentID);
             if(delStatus==1){
                 ErrorClass e=new ErrorClass("Comment does not exist");
                 return ResponseEntity.ok(e);
             }
             return ResponseEntity.ok("Comment deleted");
     }
-    //TODO add reqObj
 
     @PatchMapping
     public ResponseEntity<?> UpdateCommentById(@RequestBody Comments comments){
@@ -76,7 +74,6 @@ public CommentsController(CommentsService commentsService) {
             return Optional.of(Collections.emptyList());
         }
     }
-    //TODO add reqObj
     @GetMapping
     public ResponseEntity<?> getCommentById(@RequestParam(name="CommentID")UUID commentId){
        Optional<Comments>commentStaus=commentsService.getCommentById(commentId);

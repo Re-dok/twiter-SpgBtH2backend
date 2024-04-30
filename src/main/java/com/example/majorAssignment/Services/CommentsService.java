@@ -31,6 +31,9 @@ public class CommentsService {
         return commentDAO.addComment(comment);
     }
     public int deleteCommentById(UUID commentId){
+        Optional<Comments> tempCom=getCommentById(commentId);
+        if(tempCom.isEmpty())
+            return 1;
         return commentDAO.deleteCommentById(commentId);
     }
     public int updateCommentById(UUID commentId,String commentBody){

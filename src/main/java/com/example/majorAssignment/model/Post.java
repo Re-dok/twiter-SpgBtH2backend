@@ -27,9 +27,9 @@ public class Post {
         this.postId = UUID.randomUUID(); // Generate a random UUID
         // You may also initialize other fields here if needed
     }
-    public Post(@JsonProperty("postId")UUID postId,
-               @JsonProperty("postCreaterId") UUID postCreaterId,
-               @JsonProperty("postContent") String postContent) {
+    public Post(@JsonProperty("postID")UUID postId,
+               @JsonProperty("userID") UUID postCreaterId,
+               @JsonProperty("postBody") String postContent) {
         this.postId = postId;
         this.postCreaterId = postCreaterId;
         this.postContent = postContent;
